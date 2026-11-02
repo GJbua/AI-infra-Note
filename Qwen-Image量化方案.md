@@ -5,11 +5,6 @@
 > 工程背景：vLLM-Omni v0.20.0、Qwen-Image-2512、Ascend NPU。
 
 ---
-量化误差：
-
-```math
-E=x-\hat{x}
-```
 
 ## 1. 量化基础
 
@@ -30,8 +25,8 @@ E=x-\hat{x}
 以仿射量化（Affine Quantization）为例：
 
 ```math
-q=\operatorname{clip}\left(
-\operatorname{round}\left(\frac{x}{s}\right)+z,
+q=\mathrm{clip}\left(
+\mathrm{round}\left(\frac{x}{s}\right)+z,
 q_{\min},q_{\max}
 \right)
 ```
@@ -58,8 +53,8 @@ s=\frac{\max(|x|)}{q_{\max}}
 ```
 
 ```math
-q=\operatorname{clip}\left(
-\operatorname{round}\left(\frac{x}{s}\right),
+q=\mathrm{clip}\left(
+\mathrm{round}\left(\frac{x}{s}\right),
 -q_{\max},q_{\max}
 \right)
 ```
@@ -360,9 +355,8 @@ S_X\in\mathbb{R}^{M\times 1}
 
 ```math
 X_{q,m,k}=
-\operatorname{clip}
-\left(
-\operatorname{round}\left(\frac{X_{m,k}}{S_{X,m}}\right),
+\mathrm{clip}\left(
+\mathrm{round}\left(\frac{X_{m,k}}{S_{X,m}}\right),
 q_{\min},q_{\max}
 \right)
 ```
@@ -530,7 +524,7 @@ d=(d_1,d_2,\ldots,d_K)
 构造对角矩阵：
 
 ```math
-D=\operatorname{diag}(d_1,d_2,\ldots,d_K)
+D=\mathrm{diag}(d_1,d_2,\ldots,d_K)
 ```
 
 进行等价变换：
@@ -850,13 +844,11 @@ MSE=
 #### NMSE
 
 ```math
-\boxed{
 NMSE=
 \frac{
 \|Y_{\mathrm{ref}}-Y_q\|_F^2
 }{
 \|Y_{\mathrm{ref}}\|_F^2+\epsilon
-}
 }
 ```
 
@@ -865,13 +857,11 @@ NMSE 对数值误差进行归一化，更适合跨层比较。
 #### Cosine Similarity
 
 ```math
-\boxed{
 CosSim=
 \frac{
 \langle Y_{\mathrm{ref}},Y_q\rangle
 }{
 \|Y_{\mathrm{ref}}\|_2\|Y_q\|_2+\epsilon
-}
 }
 ```
 
